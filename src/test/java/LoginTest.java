@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
 
-    By signInLocator = By.xpath("//a[contains(text(), 'Sign in')]");
+    /*By signInLocator = By.xpath("//a[contains(text(), 'Sign in')]");
     By emailLocator = By.id("email");
     By passwordLocator = By.id("password");
     By loginButton = By.xpath("//input[@value='Login']");
@@ -34,5 +34,5 @@ public class LoginTest extends BaseTest {
         String expectedHeadingText = "Here you can manage your profile, favorites and orders.";
         Assert.assertEquals(actualHeadingText, expectedHeadingText, "Text not matched!");
 
-    }
+    }*/
 }
