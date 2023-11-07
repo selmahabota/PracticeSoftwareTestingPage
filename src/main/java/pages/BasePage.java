@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class BasePage {
-    private WebDriver driver;
+    protected WebDriver driver;
     private WebDriverWait wait;
     Faker faker;
 
@@ -34,12 +34,12 @@ public class BasePage {
         element.clear();
         element.sendKeys(text);
     }
-    protected String getAttributeValue(By locator)
-    {
+
+    protected String getAttributeValue(By locator) {
         return getElement(locator).getAttribute("value");
     }
-    protected String getTextOfElement(By locator)
-    {
+
+    protected String getTextOfElement(By locator) {
         return getElement(locator).getText();
     }
 
@@ -76,7 +76,7 @@ public class BasePage {
             wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
         } catch (ElementClickInterceptedException e) {
             //wait.until(ExpectedConditions.presenceOfElementLocated(locator)).click();
-             js.executeScript("arguments[0].click()", getElement(locator));
+            js.executeScript("arguments[0].click()", getElement(locator));
         } catch (StaleElementReferenceException s) {
             s.printStackTrace();
             hoverAndClick(locator, 5000);
@@ -84,8 +84,9 @@ public class BasePage {
             e.printStackTrace();
         }
     }
-    protected String age(){
-        if (driver instanceof ChromeDriver){
+
+    protected String age() {
+        if (driver instanceof ChromeDriver) {
             return "12121999";
         } else if (driver instanceof FirefoxDriver) {
             return "12/" + "12/" + "1229";

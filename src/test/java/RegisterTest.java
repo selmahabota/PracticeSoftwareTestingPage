@@ -1,6 +1,3 @@
-import org.checkerframework.checker.units.qual.K;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,14 +15,13 @@ public class RegisterTest extends BaseTest {
     public void registerTest (){
         registerPage.goToRegisterPage()
                 .registerPage();
-    }
-
-      /*  String actualName = getTextOfElement(userMenuLocator);
-        Assert.assertEquals(actualName, exptectedName, "Names not matched!");
+        String actualName = registerPage.getActualName();
+        String expectedName= registerPage.getExpectedName();
+        Assert.assertEquals(actualName,expectedName,"Text not matched!");
 
         String expectedText = "My account";
-        String actualText = getTextOfElement(textOnFormLocator);
+        String actualText = registerPage.getTextOnForm();
         Assert.assertEquals(actualText, expectedText, "Text not matched!");
-  */
+    }
 }
 
