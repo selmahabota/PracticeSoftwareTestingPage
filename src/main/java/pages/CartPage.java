@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.json.JsonOutput;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Utils;
 
 import java.sql.Driver;
 import java.time.Duration;
@@ -35,17 +36,14 @@ public class CartPage extends BasePage {
     private By totalPrice = By.xpath("//table[@class='table table-hover']//tfoot/tr/td[5]");
     private By totalPrices = By.xpath("//table[@class='table table-hover']//tbody//td[5]/span");
 
-    public CartPage cartPage() throws InterruptedException {
+    public CartPage cartPage() {
         clickOnElement(firstTool);
         clickOnElement(firstAddToCart);
         clickOnElement(homePage);
         clickOnElement(secondTool);
         clickOnElement(secondAddToCart);
-        Thread.sleep(5000);
+        Utils.waitForSeconds(2);
         clickOnElement(cart);
-        driver.navigate().refresh();
-
-
         return this;
     }
 
@@ -66,14 +64,12 @@ public class CartPage extends BasePage {
 
         int kolicina = Integer.parseInt(getAttributeValue(firstQuantity));
         double cijenaDouble = removeText(firstPrice);
-        System.out.println(kolicina * cijenaDouble);
         return kolicina * cijenaDouble;
     }
 
     public double getSecondPrice() {
         int kolicina = Integer.parseInt(getAttributeValue(secondQuantity));
         double cijenaDouble = removeText(secondPrice);
-        System.out.println(kolicina * cijenaDouble);
         return kolicina * cijenaDouble;
     }
 
@@ -98,7 +94,7 @@ public class CartPage extends BasePage {
 
     public int getQuantityNumberFromCart() {
 
-        return Integer.parseInt(getElement(cart).getText());
+        return Integer.parseInt(getTextOfElement(cart));
     }
 
     public double getSumOfPrices() {
@@ -109,5 +105,12 @@ public class CartPage extends BasePage {
             sum += removeTextFromString(prices.getText());
         }
         return sum;
+    }
+
+    public boolean isCartWorking() {
+        return matchesExpectedTextDouble(getFirstPrice(), getFirstTotalPrice())
+                && matchesExpectedTextDouble(getSecondPrice(), getSecondTotalPrice())
+                && matchesExpectedTextDouble(getSumOfPrices(), getTotalPrice())
+                && matchesExpectedTextInteger(getTotalQuantity(), getQuantityNumberFromCart());
     }
 }

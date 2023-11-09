@@ -1,3 +1,5 @@
+package tests;
+
 import core.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +25,9 @@ public class BaseTest {
         driver.get("https://practicesoftwaretesting.com/#/");
     }
 
+    public WebDriver getDriver() {
+        return driver;
+    }
    /* @AfterMethod
     public void tearDown(){
         driver.quit();

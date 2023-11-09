@@ -14,9 +14,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class BasePage {
     protected WebDriver driver;
     private WebDriverWait wait;
+    private static final Logger log = LogManager.getLogger(BasePage.class.getName());
+
     Faker faker;
 
     public BasePage(WebDriver driver) {
@@ -40,6 +45,7 @@ public class BasePage {
     }
 
     protected String getTextOfElement(By locator) {
+
         return getElement(locator).getText();
     }
 
@@ -85,15 +91,34 @@ public class BasePage {
         }
     }
 
-    protected String age() {
-        if (driver instanceof ChromeDriver) {
-            return "12121999";
-        } else if (driver instanceof FirefoxDriver) {
-            return "12/" + "12/" + "1229";
-        } else if (driver instanceof EdgeDriver) {
-            return "1212" + Keys.ARROW_RIGHT + "1929";
+    protected boolean matchesExpectedText(By locator, String expectedText) {
+        if (getTextOfElement(locator).equals(expectedText)) {
+            log.info("PASSED - Text found in element: " + getTextOfElement(locator) + " matches with expected text: " + expectedText);
+            return true;
+        } else {
+            log.error("FAILED - Text found in element: " + getTextOfElement(locator) + " is not matched with expected text: " + expectedText);
         }
-        return null;
+        return false;
+    }
+
+    protected boolean matchesExpectedTextDouble(double firstValue, double expectedValue) {
+        if (firstValue == expectedValue) {
+            log.info("PASSED - Value " + firstValue + " matches with expected value: " + expectedValue);
+            return true;
+        } else {
+            log.error("FAILED - Value " + firstValue + " is not matched with expected value: " + expectedValue);
+        }
+        return false;
+    }
+
+    protected boolean matchesExpectedTextInteger(int firstValue, int expectedValue) {
+        if (firstValue == expectedValue) {
+            log.info("PASSED - Value " + firstValue + " matches with expected value: " + expectedValue);
+            return true;
+        } else {
+            log.error("FAILED - Value " + firstValue + " is not matched with expected value: " + expectedValue);
+        }
+        return false;
     }
 
 }

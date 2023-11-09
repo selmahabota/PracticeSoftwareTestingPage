@@ -1,11 +1,16 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Utils;
 
 public class RegisterPage extends BasePage {
     public RegisterPage(WebDriver driver) {
@@ -27,9 +32,6 @@ public class RegisterPage extends BasePage {
     private By emailLocator = By.id("email");
     private By passwordLocator = By.id("password");
     private By registerButton = By.xpath("//button[text()='Register']");
-    private By emailSignInLocator = By.id("email");
-    private By passwordSignInLocator = By.id("password");
-    private By loginButton = By.xpath("//input[@value='Login']");
     private By userMenuLocator = By.id("user-menu");
     private By textOnFormLocator = By.xpath("//div [@class='container']//h1");
 
@@ -59,14 +61,9 @@ public class RegisterPage extends BasePage {
         selectCountry();
         typeIn(phoneLocator, faker.number().digits(8));
         typeIn(emailLocator, email);
-        String emailAddress = email;
         typeIn(passwordLocator, password);
-        String passwordSignIn = getAttributeValue(passwordLocator);
         clickOnElement(registerButton);
-        hover(emailSignInLocator, 2000);
-        typeIn(emailSignInLocator, emailAddress);
-        typeIn(passwordSignInLocator, passwordSignIn);
-        clickOnElement(loginButton);
+        Utils.waitForSeconds(2);
         return this;
     }
 
@@ -75,15 +72,30 @@ public class RegisterPage extends BasePage {
         dropDownMenuCountry.selectByVisibleText("Bosnia and Herzegovina");
     }
 
-    public String getActualName() {
-        return getTextOfElement(userMenuLocator);
+    private String age() {
+        if (driver instanceof ChromeDriver) {
+            return "12121999";
+        } else if (driver instanceof FirefoxDriver) {
+            return "12/" + "12/" + "1229";
+        } else if (driver instanceof EdgeDriver) {
+            return "1212" + Keys.ARROW_RIGHT + "1929";
+        }
+        return null;
     }
 
-    public String getExpectedName() {
-        return ime + " " + prezime;
+    public boolean isUserRegistered() {
+        return matchesExpectedText(userMenuLocator, ime + " " + prezime)
+                && matchesExpectedText(textOnFormLocator, "My account");
     }
 
-    public String getTextOnForm() {
-        return getTextOfElement(textOnFormLocator);
+    public String getEmail() {
+
+        return email;
     }
+
+    public String getPassword() {
+
+        return password;
+    }
+
 }
