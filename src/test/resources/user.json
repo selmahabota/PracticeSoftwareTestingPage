@@ -1,0 +1,26 @@
+[
+  {
+    "username": "username",
+    "password": ""
+  },
+  {
+    "username": "",
+    "password": "password"
+  },
+  {
+    "username": "username",
+    "password": "password"
+  },
+  {
+    "username": "",
+    "password": ""
+  },
+  {
+    "username": "customer@practicesoftwaretesting.com",
+    "password": ""
+  },
+  {
+    "username": "customer@practicesoftwaretesting.com",
+    "password": "123"
+  }
+]

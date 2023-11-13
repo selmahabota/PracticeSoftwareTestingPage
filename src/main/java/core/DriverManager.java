@@ -7,12 +7,16 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
 
+import static utils.Utils.dotEnv;
+
 public class DriverManager {
-    private static WebDriver driver;
-    public static WebDriver setDriver(String browser){
-        if (browser.equalsIgnoreCase("chrome")){
+    private static String browser = dotEnv().get("BROWSER");
+
+    public static WebDriver setDriver() {
+        WebDriver driver = null;
+        if (browser.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
-        }else if (browser.equalsIgnoreCase("firefox")){
+        } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
             driver = new EdgeDriver();
@@ -22,7 +26,4 @@ public class DriverManager {
         return driver;
     }
 
-    public static WebDriver getDriver(){
-        return new ChromeDriver();
-    }
 }

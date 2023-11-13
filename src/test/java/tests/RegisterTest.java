@@ -26,8 +26,23 @@ public class RegisterTest extends BaseTest {
         registerPage.goToRegisterPage()
                 .registerPage();
         loginPage.loginPage(registerPage.getEmail(), registerPage.getPassword());
-        Assert.assertTrue(registerPage.isUserRegistered(), "User is not registered!");
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn(), "User is not registered!");
     }
 
+    @Test(description = "happy path test using json")
+    public void RegisterUserFromJson() {
+        registerPage.goToRegisterPage()
+                .registerNewUser();
+        loginPage.loginPage(registerPage.getEmail(), registerPage.getPassword());
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn(), "User is not registered!");
+    }
+
+    @Test(description = "happy path test using constructor without parameters")
+    public void RegisterUserFromRegisterUser() {
+        registerPage.goToRegisterPage()
+                .registerNewUserWithDefaultConstructor();
+        loginPage.loginPage(registerPage.getEmail(), registerPage.getPassword());
+        Assert.assertTrue(registerPage.isUserRegisteredAndLoggedIn(), "User is not registered!");
+    }
 }
 

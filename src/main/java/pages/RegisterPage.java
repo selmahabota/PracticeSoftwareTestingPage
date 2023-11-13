@@ -1,15 +1,13 @@
 package pages;
 
+import model.RegisterUser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Utils;
 
 public class RegisterPage extends BasePage {
@@ -34,6 +32,7 @@ public class RegisterPage extends BasePage {
     private By registerButton = By.xpath("//button[text()='Register']");
     private By userMenuLocator = By.id("user-menu");
     private By textOnFormLocator = By.xpath("//div [@class='container']//h1");
+    private By headingTextLocator = By.xpath("//div [@class='container']//p");
 
     private String email;
     private String password;
@@ -67,12 +66,52 @@ public class RegisterPage extends BasePage {
         return this;
     }
 
-    private void selectCountry() {
+    public RegisterPage registerNewUser() {
+        RegisterUser registerUser = Utils.getRegisterDataFromJson();
+        email = registerUser.getEmail();
+        password = registerUser.getPassword();
+        typeIn(firstNameLocator, registerUser.getFirstName());
+        typeIn(lastNameLocator, registerUser.getLastName());
+        typeIn(ageLocator, age());
+        typeIn(addressLocator, registerUser.getAddress());
+        typeIn(postCodeLocator, registerUser.getPostCode());
+        typeIn(cityLocator, registerUser.getCity());
+        typeIn(stateLocator, registerUser.getState());
+        selectCountry();
+        typeIn(phoneLocator, registerUser.getPhone());
+        typeIn(emailLocator, email);
+        typeIn(passwordLocator, password);
+        clickOnElement(registerButton);
+        Utils.waitForSeconds(2);
+        return this;
+    }
+
+    public RegisterPage registerNewUserWithDefaultConstructor() {
+        RegisterUser registerUser = new RegisterUser();
+        email = registerUser.getEmail();
+        password = registerUser.getPassword();
+        typeIn(firstNameLocator, registerUser.getFirstName());
+        typeIn(lastNameLocator, registerUser.getLastName());
+        typeIn(ageLocator, age());
+        typeIn(addressLocator, registerUser.getAddress());
+        typeIn(postCodeLocator, registerUser.getPostCode());
+        typeIn(cityLocator, registerUser.getCity());
+        typeIn(stateLocator, registerUser.getState());
+        selectCountry();
+        typeIn(phoneLocator, registerUser.getPhone());
+        typeIn(emailLocator, email);
+        typeIn(passwordLocator, password);
+        clickOnElement(registerButton);
+        Utils.waitForSeconds(2);
+        return this;
+    }
+
+    public void selectCountry() {
         Select dropDownMenuCountry = new Select(getElement(countryLocator));
         dropDownMenuCountry.selectByVisibleText("Bosnia and Herzegovina");
     }
 
-    private String age() {
+    public String age() {
         if (driver instanceof ChromeDriver) {
             return "12121999";
         } else if (driver instanceof FirefoxDriver) {
@@ -83,18 +122,17 @@ public class RegisterPage extends BasePage {
         return null;
     }
 
-    public boolean isUserRegistered() {
-        return matchesExpectedText(userMenuLocator, ime + " " + prezime)
-                && matchesExpectedText(textOnFormLocator, "My account");
+    public boolean isUserRegisteredAndLoggedIn() {
+        return !matchesExpectedText(userMenuLocator, "Sign in")
+                && matchesExpectedText(textOnFormLocator, "My account")
+                && matchesExpectedText(headingTextLocator, "Here you can manage your profile, favorites and orders.");
     }
 
     public String getEmail() {
-
         return email;
     }
 
     public String getPassword() {
-
         return password;
     }
 

@@ -16,6 +16,7 @@ import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.Utils;
 
 public class BasePage {
     protected WebDriver driver;
@@ -23,10 +24,11 @@ public class BasePage {
     private static final Logger log = LogManager.getLogger(BasePage.class.getName());
 
     Faker faker;
+    private long waitTime = Long.parseLong(Utils.dotEnv().get("EXPLICIT_WAIT_TIME"));
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
         faker = new Faker(new Locale("en-us"));
     }
 

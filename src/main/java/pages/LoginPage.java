@@ -13,13 +13,8 @@ public class LoginPage extends BasePage {
     private By emailLocator = By.id("email");
     private By passwordLocator = By.id("password");
     private By loginButton = By.xpath("//input[@value='Login']");
-    private By userMenuLocator = By.id("user-menu");
-    private By textOnFormLocator = By.xpath("//div [@class='container']//h1");
-    private By headingTextLocator = By.xpath("//div [@class='container']//p");
 
-    private By emailMessage = By.xpath("//div[@data-test='email-error']/div");
-    private By passwordMessage = By.xpath("//div[@data-test='password-error']/div");
-    private By emailPasswordMessage = By.xpath("//div[@data-test='login-error']/div");
+    private By errorMessage = By.cssSelector(".alert");
 
     public LoginPage goToLoginPage() {
         clickOnElement(signInLocator);
@@ -33,35 +28,7 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public boolean isUserLoged() {
-        return !matchesExpectedText(userMenuLocator, "Sign in")
-                && matchesExpectedText(textOnFormLocator, "My account")
-                && matchesExpectedText(headingTextLocator, "Here you can manage your profile, favorites and orders.");
-    }
-
-    public boolean isUserRegistrationFailedPassword() {
-        return matchesExpectedText(passwordMessage, "Password is required.");
-    }
-
-    public boolean isUserRegistrationFailedEmail() {
-        return matchesExpectedText(emailMessage, "E-mail is required.");
-    }
-
-    public boolean isUserRegistrationFailedEmailPasswordMissing() {
-        return matchesExpectedText(emailMessage, "E-mail is required.")
-                && matchesExpectedText(passwordMessage, "Password is required.");
-    }
-
-    public boolean isUserRegistrationFailedEmailInvalid() {
-        return matchesExpectedText(emailMessage, "E-mail format is invalid.");
-    }
-
-    public boolean isUserRegistrationFailedEmailInvalidPasswordMissing() {
-        return matchesExpectedText(emailMessage, "E-mail format is invalid.")
-                && matchesExpectedText(passwordMessage, "Password is required.");
-    }
-
-    public boolean isUserRegistrationFailedPasswordInvalid() {
-        return matchesExpectedText(emailPasswordMessage, "Invalid email or password");
+    public boolean isErrorMessagePresent() {
+        return getElement(errorMessage).isDisplayed();
     }
 }

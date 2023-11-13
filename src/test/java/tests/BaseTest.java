@@ -1,9 +1,7 @@
 package tests;
 
 import core.DriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -16,7 +14,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUpDriver() {
-        driver = DriverManager.setDriver("chrome");
+        driver = DriverManager.setDriver();
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
