@@ -20,9 +20,10 @@ public class LoginTest extends BaseTest {
     RegisterPage registerPage;
 
     @BeforeMethod
-    public void setUpRegister() {
+    public void setLoginPage() {
 
         loginPage = new LoginPage(driver);
+        registerPage = new RegisterPage(driver);
     }
 
     @Test(description = "Login user happy path; Expected result: User is successfully logged")
